@@ -10,7 +10,7 @@
 
 ## 📸 Demo
 
-
+![Mission Control Dashboard](Screenshot%202026-08-08%20at%2018.05.21.png)
 
 ---
 
