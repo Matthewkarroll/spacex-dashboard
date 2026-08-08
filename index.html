@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SpaceX Mission Control</title>
+    <!-- ADDED LEAFLET CSS HERE -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body {
+            background: #0b0d17;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #4db8ff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 2px solid #4db8ff;
+            padding-bottom: 10px;
+        }
+        #dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .label {
+            color: #aaa;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .value {
+            font-size: 36px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .value.blue { color: #4db8ff; }
+        .value.green { color: #00ffcc; }
+        .value.red { color: #ff4d4d; }
+        .value.yellow { color: #ffcc00; }
+        
+        #controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+        }
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        #launchBtn {
+            background: #00cc66;
+            color: white;
+        }
+        #launchBtn:hover { background: #00b359; transform: scale(1.05); }
+        #launchBtn:disabled { background: #333; color: #666; cursor: not-allowed; transform: none; }
+        
+        #abortBtn {
+            background: #cc0000;
+            color: white;
+        }
+        #abortBtn:hover { background: #990000; transform: scale(1.05); }
+        #abortBtn:disabled { background: #333; color: #666; cursor: not-allowed; transform: none; }
+
+        #status-message {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Mission Control</h1>
+
+    <div id="dashboard">
+        <div class="card">
+            <div class="label">Altitude</div>
+            <div class="value blue" id="altitude">0.0 km</div>
+        </div>
+        <div class="card">
+            <div class="label">Speed</div>
+            <div class="value green" id="speed">0 km/h</div>
+        </div>
+        <div class="card">
+            <div class="label">Throttle</div>
+            <div class="value yellow" id="throttle">0%</div>
+        </div>
+        <div class="card">
+            <div class="label">Fuel Level</div>
+            <div class="value green" id="fuel">100%</div>
+        </div>
+        <div class="card">
+            <div class="label">Mission Time</div>
+            <div class="value blue" id="time">0s</div>
+        </div>
+        <div class="card">
+            <div class="label">Status</div>
+            <div class="value red" id="status">PRE-LAUNCH</div>
+        </div>
+    </div>
+
+    <div id="map-container" style="width: 100%; max-width: 800px; height: 200px; margin-top: 30px; border-radius: 10px; border: 1px solid #444; background: #111;">
+        <div id="flight-map" style="width: 100%; height: 100%; border-radius: 10px;"></div>
+    </div>
+
+    <div id="controls">
+        <button id="launchBtn" onclick="launch()">🟢 Launch</button>
+        <button id="abortBtn" onclick="abort()" disabled>🔴 Abort</button>
+        <button id="resetBtn" onclick="resetMission()" style="background: #555; color: white;">🔄 Reset</button>
+    </div>
+
+    <div id="status-message">Waiting for launch command...</div>
+
+    <!-- ADDED LEAFLET JS HERE -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
